@@ -1,0 +1,6 @@
+{
+  "apiKey": "",
+  "checkIntervalMs": 60000,
+  "windowSize": 360,
+  "windowPosition": { "x": null, "y": null }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "ds-fish-pet",
+  "version": "1.0.0",
+  "description": "思想气泡 · DeepSeek 余额桌宠 — 一条吐着思想气泡、替你盯余额的肥鱼",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "private": true,
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}
