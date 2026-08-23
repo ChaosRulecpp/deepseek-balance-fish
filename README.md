@@ -52,10 +52,9 @@
 npm install
 
 # 2. 配置你的 DeepSeek API Key
-#    复制模板文件并填入 key:
-cp config.example.json config.json
-#    然后编辑 config.json,把 apiKey 填成你的
-#    (config.json 已被 .gitignore 排除,不会传到 GitHub)
+#    直接编辑 config.json,把 apiKey 填成你的
+#    (默认 config.json 里 key 是空的;填完 key 后建议执行
+#     git update-index --skip-worktree config.json,避免 key 被提交上传)
 
 # 3. 启动
 npm start
@@ -74,7 +73,7 @@ npm start
 | `windowSize`      | 桌宠窗口边长(像素)              | `360`           |
 | `windowPosition`  | 上次拖到的位置(自动记忆)        | `null`          |
 
-> **安全**:`.gitignore` 已排除 `config.json`,你的 key 不会被提交。首次 clone 后请拷贝 `config.example.json` 并填写自己的 key。
+> **安全**:仓库默认提交的 `config.json` 里 key 是空的,无需复制模板,填上自己的 key 就能用。填入 key 后,建议执行 `git update-index --skip-worktree config.json`,这样本地改动不会进入提交,key 就不会被上传。
 
 ---
 
@@ -87,8 +86,7 @@ renderer/
   index.html         # 页面骨架(canvas)
   renderer.js        # 动画播放、命中检测、点击穿透、气泡绘制
 assets/transparent/  # 去背景动画帧
-config.json          # 你的配置(含 API Key,已被 git 忽略)
-config.example.json  # 配置模板(公开,key 留空)
+config.json          # 默认配置(公开,key 留空,填上自己的 key 即可使用)
 ```
 
 ---
