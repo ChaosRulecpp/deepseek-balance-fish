@@ -128,7 +128,12 @@ function findCachedElectronZip(version) {
     appVersion: VERSION,
     // 开发用的东西不进发布包:工具脚本、git、编辑器配置、以及那个给开发者用的 bat
     // (成品靠 exe 启动,bat 留在包里只会让人不知道该双击哪个)
-    ignore: [/^\/tools($|\/)/, /^\/dist($|\/)/, /^\/\.git($|\/)/, /^\/\.claude($|\/)/, /^\/启动桌宠\.bat$/],
+    //
+    // config.json 必须排除:仓库根目录这份是给源码运行用的,本地开发时里面
+    // 往往已经填了自己的 API Key。打包版运行时读的是 exe 同级目录的 config.json
+    // (见 main.js 的 CONFIG_PATH),asar 里这份压根不会被读 —— 收进去只会把
+    // 开发者的 key 白白送给每一个下载 zip 的人。
+    ignore: [/^\/tools($|\/)/, /^\/config\.json$/, /^\/dist($|\/)/, /^\/\.git($|\/)/, /^\/\.claude($|\/)/, /^\/启动桌宠\.bat$/],
   };
 
   if (cachedZip) {
