@@ -3,3 +3,10 @@ node_modules/
 assets/frames/
 *.log
 .DS_Store
+
+# 打包产物(npm run build 生成,发布走 GitHub Releases,不进仓库)
+dist/
+
+# 生成物:由 tools/make-icon.js 从 assets/transparent/work/frame_0001.webp 推导
+assets/icon.ico
+tools/icon-preview-128.png

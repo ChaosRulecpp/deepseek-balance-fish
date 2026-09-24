@@ -1,0 +1,8 @@
+# 双击启动的批处理:强制 CRLF
+#
+# 本机 core.autocrlf=true,提交时会把 CRLF 归一化成 LF 存进仓库。
+# 实测这个 bat 在 LF 下也能跑(多行 if 块 / goto 标签都正常),
+# 但 cmd.exe 对 LF 批处理的容忍度随 Windows 版本而异,而别人
+# clone 或从 GitHub 下载 ZIP 时的换行符不受我们控制。
+# 加上 eol=crlf 后,无论在哪台机器、哪种方式拿到的都是 CRLF。
+*.bat text eol=crlf

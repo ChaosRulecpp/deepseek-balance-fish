@@ -19,7 +19,7 @@
   const XFADE_MS = 130;         // 帧不连续(切换/回绕/跳变)时的透明度叠化时长(ms),溶解姿态突变
 
   // ---------- 余额思想气泡 ----------
-  const BUBBLE_SRC = '../assets/transparent/chat bubble/bubble.png';
+  const BUBBLE_SRC = '../assets/transparent/chat bubble/bubble.webp';
   const BUBBLE_W = 150;                                  // 气泡显示宽度
   const BUBBLE_H = Math.round(BUBBLE_W * 196 / 259);     // ≈114,与裁剪后素材等比
   const BUBBLE_LEFT = 18;                                // 距窗口左边缘
@@ -55,7 +55,8 @@
   }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function key(animKey, i) { return animKey + ':' + i; }
-  function url(anim, i) { return '../assets/transparent/' + anim.dir + '/frame_' + String(i + 1).padStart(4, '0') + '.png'; }
+  // 素材为无损 WebP(体积约为原 PNG 的 38%,chromium 原生解码,画质无损)
+  function url(anim, i) { return '../assets/transparent/' + anim.dir + '/frame_' + String(i + 1).padStart(4, '0') + '.webp'; }
 
   function load(animKey, anim, i, size) {
     const k = key(animKey, i);

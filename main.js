@@ -5,22 +5,36 @@ const fs = require('fs');
 const https = require('https');
 
 const ROOT = __dirname;
-const CONFIG_PATH = path.join(ROOT, 'config.json');
+// 配置放在哪:打包后 __dirname 指向只读的 app.asar 内部,用户既看不见 config.json
+// 也没法编辑它(填 API Key 就无从谈起)。所以成品让配置待在 exe 同级目录 ——
+// 便携软件的惯例,也是用户解压后一眼能看到的位置。开发时仍是项目根目录。
+const CONFIG_PATH = app.isPackaged
+  ? path.join(path.dirname(app.getPath('exe')), 'config.json')
+  : path.join(ROOT, 'config.json');
 const BALANCE_URL = { hostname: 'api.deepseek.com', path: '/user/balance', method: 'GET' };
 const BUBBLE_EXTRA = 50; // 桌宠帧绘制起点(= renderer 的 PET_Y),窗口高 = 桌宠尺寸 + 该值
 
 // ---------- 配置 ----------
+const DEFAULT_CONFIG = { apiKey: '', checkIntervalMs: 60000, windowSize: 360, windowPosition: { x: null, y: null } };
+
 function loadConfig() {
-  const def = { apiKey: '', checkIntervalMs: 60000, windowSize: 360, windowPosition: { x: null, y: null } };
   try {
-    if (fs.existsSync(CONFIG_PATH)) return { ...def, ...JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8')) };
+    if (fs.existsSync(CONFIG_PATH)) return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8')) };
   } catch (e) { console.error('读取 config.json 失败:', e.message); }
-  return def;
+  return { ...DEFAULT_CONFIG };
 }
 function saveConfig() {
   try { fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2)); } catch (e) { console.error('写入 config.json 失败:', e.message); }
 }
+// 打包版首次启动时,在 exe 旁边落一份默认配置。
+// 不落盘的话用户面前只有一个 exe,连要编辑的文件名都无处可寻。
+function seedConfigIfMissing() {
+  if (!app.isPackaged || fs.existsSync(CONFIG_PATH)) return;
+  try { fs.writeFileSync(CONFIG_PATH, JSON.stringify(DEFAULT_CONFIG, null, 2)); }
+  catch (e) { console.error('写入默认 config.json 失败:', e.message); }
+}
 
+seedConfigIfMissing();
 let config = loadConfig();
 let win = null;
 let tray = null;

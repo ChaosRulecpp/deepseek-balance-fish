@@ -4,10 +4,15 @@
   "description": "思想气泡 · DeepSeek 余额桌宠 — 一条吐着思想气泡、替你盯余额的肥鱼",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "assets:webp": "node tools/convert-assets.js",
+    "icon": "node tools/make-icon.js",
+    "build": "node tools/build.js"
   },
   "private": true,
   "devDependencies": {
-    "electron": "^33.0.0"
+    "@electron/packager": "^20.3.0",
+    "electron": "^33.0.0",
+    "sharp": "^0.35.4"
   }
 }
